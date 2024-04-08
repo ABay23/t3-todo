@@ -62,6 +62,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    todos         todo[]
 }
 
 model VerificationToken {
@@ -76,4 +77,8 @@ model todo {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
+    text      String
+    done      Boolean  @default(false)
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
 }
