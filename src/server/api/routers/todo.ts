@@ -1,3 +1,5 @@
+import { create } from 'domain';
+import { todoInput } from '~/types';
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -13,8 +15,15 @@ export const todoRouter = createTRPCRouter({
       {
         id: "fake",
         text: "fake text",
-        completed: false,
+        done: false,
       },
     ];
   }),
+  create: protectedProcedure.input(todoInput).mutation(async ({ctx})) => {
+    return ctx.db.todo.create({
+      data:{
+        text: input,
+      }
+    })
+  }
 });
